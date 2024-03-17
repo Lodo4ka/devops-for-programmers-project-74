@@ -1,8 +1,20 @@
 services:
-  app:
+  app-local:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
+    volumes:
+      - './app:/app'
+
+  app-test:
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    ports:
+      - "8080:8080"
+    volumes:
+      - './app:/app'
+
 
