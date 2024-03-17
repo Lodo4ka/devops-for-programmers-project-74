@@ -1,12 +1,13 @@
 services:
-  # app-local:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "8080:8080"
-  #   volumes:
-  #     - './app:/app'
+  app-local:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - './app:/app'
+    command: 'bash -c \"sleep 3 && npm start\"'
 
   app-production:
     build:
@@ -16,6 +17,7 @@ services:
       - "8080:8080"
     volumes:
       - './app:/app'
+    command: 'bash -c \"sleep 3 && npm start\"'
 
   caddy:
     depends_on:
