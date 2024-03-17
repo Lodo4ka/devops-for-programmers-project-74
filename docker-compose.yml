@@ -5,5 +5,5 @@ services:
     image: lodo4ka/devops-for-programmers-project-74
     extends:
       file: docker-compose.override.yml
-      service: app-test
+      service: app-production
 

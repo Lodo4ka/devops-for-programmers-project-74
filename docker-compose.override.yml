@@ -1,14 +1,14 @@
 services:
-  app-local:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    volumes:
-      - './app:/app'
+  # app-local:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8080:8080"
+  #   volumes:
+  #     - './app:/app'
 
-  app-test:
+  app-production:
     build:
       context: .
       dockerfile: Dockerfile.production
@@ -16,5 +16,15 @@ services:
       - "8080:8080"
     volumes:
       - './app:/app'
+
+  caddy:
+    depends_on:
+      - app-production
+    image: caddy:2.7.6
+    volumes:
+      - './services/caddy/Caddyfile:/etc/caddy/Caddyfile'
+    ports:
+      - "80:80"
+      - "443:443"
 
 
