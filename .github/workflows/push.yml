@@ -1,0 +1,29 @@
+name: push
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build app
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./Dockerfile.production
+          push: true
+          tags: lodo4ka/devops-for-programmers-project-74:latest
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run test
+        run: make compose-ci
