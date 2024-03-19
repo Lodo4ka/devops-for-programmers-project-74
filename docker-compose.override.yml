@@ -1,5 +1,5 @@
 services:
-  app-local:
+  app:
     build:
       context: .
       dockerfile: Dockerfile
@@ -7,26 +7,30 @@ services:
       - "8080:8080"
     volumes:
       - './app:/app'
-    command: 'bash -c \"sleep 3 && npm start\"'
-
-  app-production:
-    build:
-      context: .
-      dockerfile: Dockerfile.production
-    ports:
-      - "8080:8080"
-    volumes:
-      - './app:/app'
-    command: 'bash -c \"sleep 3 && npm start\"'
+    command: 'bash -c "sleep 3 && npm start"'
+    networks:
+      - main-network
 
   caddy:
     depends_on:
-      - app-production
+      - app
     image: caddy:2.7.6
-    volumes:
-      - './services/caddy/Caddyfile:/etc/caddy/Caddyfile'
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
     ports:
       - "80:80"
       - "443:443"
+      - "443:443/udp"
+    volumes:
+      - './services/caddy/Caddyfile:/etc/caddy/Caddyfile'
+    networks:
+      - main-network
 
+volumes:
+  caddy_data:
+    external: true
+  caddy_config:
 
+networks:
+  main-network:
