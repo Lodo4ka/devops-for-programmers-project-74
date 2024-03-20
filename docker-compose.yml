@@ -13,6 +13,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.production
+    networks:
+    - main-network
 
   db:
     volumes:
@@ -28,3 +30,7 @@ services:
 
 volumes:
   pgdata:
+
+networks:
+  main-network:
+
