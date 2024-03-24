@@ -8,8 +8,6 @@ services:
     volumes:
       - './app:/app'
     command: 'bash -c "sleep 3 && npm start"'
-    networks:
-      - main-network
 
   caddy:
     depends_on:
@@ -24,13 +22,5 @@ services:
       - "443:443/udp"
     volumes:
       - './services/caddy/Caddyfile:/etc/caddy/Caddyfile'
-    networks:
-      - main-network
-
-volumes:
-  caddy_data:
-    external: true
-  caddy_config:
-
-networks:
-  main-network:
+      - 'caddy_data:/data'
+      - 'caddy_config:/config'

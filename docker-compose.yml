@@ -12,8 +12,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.production
-    networks:
-    - main-network
 
   db:
     volumes:
@@ -24,12 +22,6 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
       POSTGRES_HOST_AUTH_METHOD: trust
-    networks:
-      - main-network
 
 volumes:
   pgdata:
-
-networks:
-  main-network:
-
