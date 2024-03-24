@@ -8,6 +8,7 @@ services:
     extends:
       file: docker-compose.override.yml
       service: app
+    command: make test
     build:
       context: .
       dockerfile: Dockerfile.production
