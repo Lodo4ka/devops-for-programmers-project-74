@@ -8,7 +8,7 @@
     "test": "test"
   },
   "scripts": {
-    "migrate": "sequelize db:migrate",
+    "migrate": "npx sequelize db:migrate",
     "pretest": "NODE_ENV=test sequelize db:migrate:undo && NODE_ENV=test npm run migrate",
     "test": "jest --ci",
     "prestart": "NODE_ENV=production npm run migrate",
