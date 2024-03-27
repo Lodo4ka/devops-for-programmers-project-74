@@ -2,18 +2,18 @@ version: '3'
 
 services:
   app:
+    build:
+      context: ./
+      dockerfile: Dockerfile.production
     depends_on:
       - db
     image: lodo4ka/devops-for-programmers-project-74
-    extends:
-      file: docker-compose.override.yml
-      service: app
+    ports:
+      - "8080:8080"
     command: make test
-    build:
-      context: .
-      dockerfile: Dockerfile.production
 
   db:
+    restart: always
     volumes:
       - pgdata:/var/lib/postgresql/data
     image: postgres:latest
@@ -22,6 +22,20 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
       POSTGRES_HOST_AUTH_METHOD: trust
+
+  caddy:
+    depends_on:
+      - app
+    image: caddy:2.7.6
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - './services/caddy/Caddyfile:/etc/caddy/Caddyfile'
 
 volumes:
   pgdata:
