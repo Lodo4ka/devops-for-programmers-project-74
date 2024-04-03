@@ -21,7 +21,20 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
-      POSTGRES_HOST_AUTH_METHOD: trust
+
+  caddy:
+    depends_on:
+      - app
+    image: caddy:2.7.6
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - './services/caddy/Caddyfile:/etc/caddy/Caddyfile'
 
 volumes:
   pgdata:
