@@ -16,7 +16,7 @@ services:
     image: lodo4ka/devops-for-programmers-project-74
     ports:
       - "8080:8080"
-    command: bash -c 'sleep 3 && npm start'
+    command: bash -c 'sleep 3 && npm test'
 
   db:
     volumes:
