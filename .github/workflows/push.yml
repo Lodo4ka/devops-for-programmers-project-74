@@ -28,7 +28,6 @@ jobs:
           push: true
           tags: lodo4ka/devops-for-programmers-project-74:latest
 
-
   test:
     needs: build
     runs-on: ubuntu-latest
@@ -46,3 +45,13 @@ jobs:
           echo POSTGRES_DB=${{ secrets.POSTGRES_DB }} >> .env
       - name: Run test
         run: make compose-ci
+
+  push:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: lodo4ka/devops-for-programmers-project-74:latest
