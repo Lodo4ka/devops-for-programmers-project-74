@@ -36,3 +36,13 @@ jobs:
       - uses: actions/checkout@v3
       - name: Run test
         run: make compose-ci
+        env:
+          DATABASE_PASSWORD: ${secrets.DATABASE_PASSWORD}
+          DATABASE_USERNAME: ${secrets.DATABASE_USERNAME}
+          DATABASE_NAME: ${secrets.DATABASE_NAME}
+          DATABASE_PORT: ${secrets.DATABASE_PORT}
+          DATABASE_HOST: ${secrets.DATABASE_HOST}
+          POSTGRES_USER: ${secrets.POSTGRES_USER}
+          POSTGRES_PASSWORD: ${secrets.POSTGRES_PASSWORD}
+          POSTGRES_DB: ${secrets.POSTGRES_DB}
+
